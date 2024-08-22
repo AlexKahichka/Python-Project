@@ -1,9 +1,8 @@
 from prettytable import PrettyTable
 from colorama import Fore, Style, init
 
-from movie_search_app.queries_to_db import show_top_queries, search_movies
+from movie_search_app.queries_to_db import show_top_queries, search_movies, show_categories
 
-# Инициализация colorama
 init(autoreset=True)
 
 
@@ -11,9 +10,9 @@ def main():
     print("Welcome to the movie search application!")
 
     while True:
-        print("\nChoose an option:")
+        print("\nChoose an option:\n")
         print("1. Search for movies")
-        print("2. View top 10 search queries")
+        print("2. Check top 20 search queries")
         print("3. Exit")
 
         choice = input("Enter the number of your choice: ").strip()
@@ -37,8 +36,12 @@ def main():
                 search_condition = input("Enter the release year to search: ")
                 search_type = 'release_year'
             elif search_choice == '3':
-                search_condition = input("Enter the category to search: ")
-                search_type = 'category'
+                category_name = show_categories()
+                if category_name:
+                    search_condition = category_name
+                    search_type = 'category'
+                else:
+                    continue
             elif search_choice == '4':
                 search_condition = input("Enter the movie description to search: ")
                 search_type = 'description'
@@ -50,7 +53,7 @@ def main():
                 print("4. Rating above 3")
                 print("5. Top rating")
 
-                rating_choice = input("Enter the number of the rating filter: ").strip()
+                rating_choice = input("Enter the number of the rating filter: ")
 
                 if rating_choice == '1':
                     search_condition = '0-1'
@@ -83,7 +86,7 @@ def main():
             show_top_queries()
 
         elif choice == '3':
-            print("Exiting the application...")
+            print("\nExiting the application...\n\nHAVE A NICE DAY!")
             break
 
         else:
